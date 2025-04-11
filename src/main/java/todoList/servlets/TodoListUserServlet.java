@@ -1,16 +1,17 @@
-package todoList;
+package todoList.servlets;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.json.JSONArray;
+import todoList.login.UserManager;
 import org.json.JSONObject;
+import todoList.login.EncryptDecrypt;
+import todoList.login.JSONtoken;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.sql.*;
-import java.util.List;
 
 public class TodoListUserServlet extends HttpServlet {
 
@@ -28,7 +29,7 @@ public class TodoListUserServlet extends HttpServlet {
         try {
 
             switch (path) {
-                case "/login":
+                case "/todoListLogin":
                     if (username != null && password != null) {
                         login(username, password, jsonResponse);
                     } else {
@@ -36,7 +37,7 @@ public class TodoListUserServlet extends HttpServlet {
                     }
                     break;
 
-                case "/register":
+                case "/todoListRegister":
                     if (username != null && password != null) {
                         register(username, password, jsonResponse);
                     } else {
@@ -84,7 +85,8 @@ public class TodoListUserServlet extends HttpServlet {
             if (result == 1) {
                 jsonResponse.put("status", "Login successful");
 
-                String SEC_KEY = "iAmIronMan";
+                String SEC_KEY = "iAmIronManWithAwesomeSuit1234567";
+
 
                 SecretKey secretKey = new SecretKeySpec(SEC_KEY.getBytes(), "AES");
 

@@ -1,4 +1,4 @@
-package todoList;
+package todoList.login;
 
 
 import io.jsonwebtoken.Claims;
@@ -14,7 +14,7 @@ import java.util.Date;
 public class JSONtoken
 {
 
-    private static final String SEC_KEY = "neverEverGiveUp";
+    private static final String SEC_KEY = "neverEverGiveUpBroTryMoreUntilYouDie";
 
     private static final Key key = Keys.hmacShaKeyFor(SEC_KEY.getBytes(StandardCharsets.UTF_8));
 

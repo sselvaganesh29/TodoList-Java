@@ -1,4 +1,4 @@
-package todoList;
+package todoList.login;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -14,9 +14,9 @@ public class EncryptDecrypt
 
         Cipher c = Cipher.getInstance("AES/ECB/PKCS5Padding");
         c.init(Cipher.ENCRYPT_MODE,secretKey);
-        byte[] encryptedvalue = c.doFinal(token.getBytes());
-        String result = Base64.getEncoder().encodeToString(encryptedvalue);
-        return result;
+        byte[] encryptedValue = c.doFinal(token.getBytes());
+        return Base64.getEncoder().encodeToString(encryptedValue);
+
     }
 
     public static String decrypt ( String encryptedValue,SecretKey secretKey ) throws Exception {

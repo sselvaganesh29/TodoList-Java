@@ -1,4 +1,6 @@
-package todoList;
+package todoList.login;
+
+import todoList.database.DBconnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +9,12 @@ import java.sql.SQLException;
 
 public class UserManager
 {
+
+    public static final UserManager INSTANCE = new UserManager();
+
+    private UserManager(){
+
+    }
 
     public static int register(String userName,String password) throws SQLException {
         String sql = "INSERT INTO users (username, password ) VALUES (?, ?)";
@@ -91,6 +99,31 @@ public class UserManager
         }
         return -1;
     }
+
+
+    public static boolean isValidUser(int id) throws SQLException {
+
+        String qry = "SELECT * FROM users WHERE id = ?";
+
+        try ( Connection con = DBconnection.getDbConnection();
+              PreparedStatement preparedStatement = con.prepareStatement(qry))
+        {
+            preparedStatement.setInt(1,id);
+
+            ResultSet set = preparedStatement.executeQuery();
+
+            if ( set.next() )
+            {
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        return false;
+    }
+
 
 
 
