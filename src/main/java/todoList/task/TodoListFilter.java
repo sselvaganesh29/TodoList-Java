@@ -37,18 +37,12 @@ public class TodoListFilter implements Filter {
 
         JSONObject jsonResponse = new JSONObject();
 
-        String encryptedToken = httpServletRequest.getHeader("encryptedToken");
+
 
         String path = httpServletRequest.getServletPath();
 
 
-        if (encryptedToken == null || encryptedToken.isEmpty()) {
-            jsonResponse.put("error", "Missing or invalid encryptedToken header");
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
-            httpServletResponse.getWriter().write(jsonResponse.toString());
-            httpServletResponse.getWriter().flush();
-            return;
-        }
+
 
 
 
@@ -58,7 +52,26 @@ public class TodoListFilter implements Filter {
 
         try {
 
+            String encryptedToken = httpServletRequest.getHeader("encryptedToken");
+
+            if (encryptedToken == null || encryptedToken.isEmpty()) {
+                jsonResponse.put("error", "Missing or invalid encryptedToken header");
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+                httpServletResponse.getWriter().write(jsonResponse.toString());
+                httpServletResponse.getWriter().flush();
+                return;
+            }
+
             String token = EncryptDecrypt.decrypt(encryptedToken, SECRET_KEY);
+
+
+            if (token == null || token.isEmpty()) {
+                jsonResponse.put("error", "Invalid token");
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+                httpServletResponse.getWriter().write(jsonResponse.toString());
+                httpServletResponse.getWriter().flush();
+                return;
+            }
 
             String userName = JSONtoken.getUsername(token);
 
